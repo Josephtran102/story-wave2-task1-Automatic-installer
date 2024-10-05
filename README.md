@@ -22,7 +22,8 @@ Features
 This option allows you to install the Story node with a single command. It will automatically download and install all necessary components.
 
 <img src="assets/08-install-1.png" style="width: 100%; height: 100%; object-fit: cover;" />
-<img src="assets/08-install-2.png" style="width: 100%; height: 100%; object-fit: cover;" />
+
+<img src="assets/09-install-2.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 2. Manage node | Version, Port, Backup keys, Stop/Start
 This menu provides various management options for your Story node:
