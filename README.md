@@ -63,6 +63,9 @@ This option guides you through the process of backing up your node data and then
 
 ## 7. Exit
 Selecting this option will exit the Story Node Manager.
+
+<img src="assets/10-exit.png" style="width: 100%; height: 100%; object-fit: cover;" />
+
 ###Navigation Tips
 
 - Use the arrow keys to move up and down in the menu.
