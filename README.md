@@ -63,12 +63,15 @@ This option guides you through the process of backing up your node data and then
 
 ## 7. Exit
 Selecting this option will exit the Story Node Manager.
-Navigation Tips
+###Navigation Tips
 
-Use the arrow keys to move up and down in the menu.
-Press Enter to select an option.
-You can also type the number of your choice to quickly select an option.
+- Use the arrow keys to move up and down in the menu.
+- Press Enter to select an option.
+- You can also type the number of your choice to quickly select an option.
 
-## Support
-For more information or support, visit `www.josephtran.xyz` or join our community channels.
+## 📫 If you need any help. Contact to me:
+[![Website](https://img.shields.io/badge/Website-3b5998?style=for-the-badge&logo=google-chrome&logoColor=white)](https://service.josephtran.xyz/)
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/josephtran102)
+[![telegram](https://img.shields.io/badge/telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/josephtran)
+[![discord](https://img.shields.io/badge/discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discordapp.com/users/597430737440079883)
 Thank you for using Story Node Manager!
