@@ -1,6 +1,7 @@
+# Wave-2: story-validators-race
 <img src="assets/story-wave2-banner-task1.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
-# Story Node Manager User Guide
+# Task 1: Automatic installer for the Story node
 
 # Introduction
 
