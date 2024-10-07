@@ -36,30 +36,46 @@ Stop or start the node
 
 <img src="assets/03-manage-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
+<img src="assets/13-check-version.png" style="width: 100%; height: 100%; object-fit: cover;" />
+
+<img src="assets/11-change-port.png" style="width: 100%; height: 100%; object-fit: cover;" />
+
+<img src="assets/export-keys.png" style="width: 100%; height: 100%; object-fit: cover;" />
+
+
+
 ## 3. Check node | status, block sync, logs
 This submenu offers different ways to monitor your node:
 
-Check Node Status: View the current status of your node
-Check Block Sync: Monitor the synchronization progress
-Check Geth Logs: View the Geth client logs
-Check Story Logs: View the Story node logs
+- Check Node Status: View the current status of your node
+- Check Block Sync: Monitor the synchronization progress
+- Check Geth Logs: View the Geth client logs
+- Check Story Logs: View the Story node logs
 
 <img src="assets/04-check-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
+
+<img src="assets/check-node-status.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="assets/geth-logs.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="assets/story-logs.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 4. Upgrade node
 Use this option to upgrade your Story node to the latest version.
 
 <img src="assets/05-upgrade-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="assets/upgrade-story.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="assets/upgrade-geth.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 5. Download latest snapshot
 This option allows you to download the latest blockchain snapshot, which can significantly reduce the time needed for initial synchronization.
 
 <img src="assets/06-snapshot.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="assets/download-snapshot.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 6. Backup & Remove node
 This option guides you through the process of backing up your node data and then removing the node from your system.
 
 <img src="assets/07-backup-remove.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="assets/backup-remove-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 7. Exit
 Selecting this option will exit the Story Node Manager.
