@@ -18,7 +18,7 @@ After running the script, you'll see the main menu with the following options:
 
 <img src="assets/01-main-menu.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
-Features
+# Features
 ## 1. Install Story node | One-liner
 This option allows you to install the Story node with a single command. It will automatically download and install all necessary components.
 
