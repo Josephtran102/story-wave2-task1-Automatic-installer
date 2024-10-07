@@ -6,6 +6,10 @@ BLUE='\033[0;36m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
+# Default snapshot URLs
+DEFAULT_STORY_SNAPSHOT="https://story.josephtran.co/Story_snapshot.lz4"
+DEFAULT_GETH_SNAPSHOT="https://story.josephtran.co/Geth_snapshot.lz4"
+
 # Function to print colored output
 print_color() {
     case $1 in
@@ -27,97 +31,23 @@ check_status() {
     fi
 }
 
-# Function to check versions
-check_versions() {
-    clear
-    print_color "blue" "=== Check Versions | J•Node | www.josephtran.xyz ==="
-    
-    print_color "yellow" "Loading bash profile..."
-    source ~/.bash_profile
-    check_status "Bash profile loaded"
-
-    echo "Story version:"
-    if story version; then
-        check_status "Story version checked"
-    else
-        print_color "red" "Failed to check Story version"
-    fi
-
-    echo ""
-    echo "Story-Geth version:"
-    if story-geth version; then
-        check_status "Story-Geth version checked"
-    else
-        print_color "red" "Failed to check Story-Geth version"
-    fi
-
+# Function to install tools
+install_tools() {
+    print_color "yellow" "Installing required tools: wget lz4 aria2 pv"
+    sudo apt-get update
+    sudo apt-get install wget lz4 aria2 pv -y
+    check_status "Tools installation"
     read -n 1 -s -r -p "Press any key to continue"
 }
 
-# Function to change port for node
-change_port() {
-    CONFIG_FILE="$HOME/.story/story/config/config.toml"
-
-    if [ ! -f "$CONFIG_FILE" ]; then
-        print_color "red" "Configuration file not found!"
-        return 1
-    fi
-
-    read -p "Enter the new base port number (e.g., 22): " NEW_BASE_PORT
-
-    cp "$CONFIG_FILE" "${CONFIG_FILE}.bak"
-
-    sed -i -E "
-        s/(tcp:\/\/127\.0\.0\.1:)([0-9]{2})([0-9]{3})/\1$NEW_BASE_PORT\3/g;
-        s/(tcp:\/\/0\.0\.0\.0:)([0-9]{2})([0-9]{3})/\1$NEW_BASE_PORT\3/g;
-        s/(laddr = \"tcp:\/\/127\.0\.0\.1:)([0-9]{2})([0-9]{3})/\1$NEW_BASE_PORT\3/g;
-        s/(laddr = \"tcp:\/\/0\.0\.0\.0:)([0-9]{2})([0-9]{3})/\1$NEW_BASE_PORT\3/g
-    " "$CONFIG_FILE"
-
-    print_color "yellow" "Changed lines:"
-    diff -u "${CONFIG_FILE}.bak" "$CONFIG_FILE" | grep -E '^\+' | sed 's/^\+//'
-
-    print_color "blue" "Ports have been updated in $CONFIG_FILE."
-    read -n 1 -s -r -p "Press any key to continue"
-}
-
-# Function to export keys
-export_keys() {
-    clear
-    print_color "blue" "=== Export Keys | J•Node | www.josephtran.xyz ==="
-    
-    print_color "yellow" "Loading bash profile..."
-    source $HOME/.bash_profile
-    check_status "Bash profile loaded"
-
-    print_color "yellow" "Exporting keys..."
-    story validator export --export-evm-key
-    check_status "Keys exported"
-
-    print_color "blue" "Keys have been exported. Please check the output above for the location of the exported keys."
-    read -n 1 -s -r -p "Press any key to continue"
-}
-
-
-# Function to manage node (stop/start) and check versions
-manage_node() {
-    local options=(
-        "Check Versions"
-        "Change port for node"
-        "Export Keys"
-        "Stop Story" 
-        "Stop Story-Geth" 
-        "Stop Both" 
-        "Start Story" 
-        "Start Story-Geth" 
-        "Start Both" 
-        "Back to main menu"
-    )
+# Function to choose download source
+choose_download_source() {
     local current=0
+    local options=("Download from JosephTran (recommended)" "Input custom snapshot URLs" "Back")
 
     while true; do
         clear
-        print_color "blue" "=== Manage Node | J•Node | www.josephtran.xyz ==="
+        print_color "blue" "Choose Download Source:"
         echo "Use arrow keys to navigate, Enter to select, or type the number of your choice."
         echo ""
 
@@ -129,10 +59,8 @@ manage_node() {
             fi
         done
 
-        # Read a single character
         read -s -n 1 key
 
-        # Handle arrow keys, numbers, and enter
         if [[ $key == $'\e' ]]; then
             read -s -n 2 key
             if [[ $key == '[A' ]]; then  # Up arrow
@@ -142,57 +70,146 @@ manage_node() {
                 ((current++))
                 [ "$current" -ge "${#options[@]}" ] && current=0
             fi
-        elif [[ $key =~ ^[1-9]$ ]]; then  # Number keys
-            if [ "$key" -le "${#options[@]}" ]; then
-                current=$((key-1))
-                break
-            fi
+        elif [[ $key =~ ^[1-3]$ ]]; then  # Number keys
+            current=$((key-1))
+            break
         elif [[ $key == '' ]]; then  # Enter key
             break
         fi
     done
 
     case $current in
-        0) check_versions ;;
-        1) change_port ;;
-        2) export_keys ;;
-        3) 
-            sudo systemctl stop story
-            check_status "Story stopped"
+        0)
+            story_snapshot_url=$DEFAULT_STORY_SNAPSHOT
+            geth_snapshot_url=$DEFAULT_GETH_SNAPSHOT
+            print_color "blue" "Using default snapshots from JosephTran"
+            download_snapshots
             ;;
-        4) 
-            sudo systemctl stop story-geth
-            check_status "Story-Geth stopped"
+        1)
+            print_color "yellow" "Please enter the URLs for custom snapshots:"
+            read -p "Enter Story snapshot URL: " story_snapshot_url
+            read -p "Enter Geth snapshot URL: " geth_snapshot_url
+            download_snapshots
             ;;
-        5) 
-            sudo systemctl stop story
-            sudo systemctl stop story-geth
-            check_status "Both services stopped"
+        2)
+            return  # Back to previous menu
             ;;
-        6) 
-            sudo systemctl start story
-            check_status "Story started"
-            ;;
-        7) 
-            sudo systemctl start story-geth
-            check_status "Story-Geth started"
-            ;;
-        8) 
-            sudo systemctl start story
-            sudo systemctl start story-geth
-            check_status "Both services started"
-            ;;
-        9) return ;;
-        *) print_color "red" "Invalid choice" ;;
     esac
-    [[ $current != 9 ]] && read -n 1 -s -r -p "Press any key to continue"
 }
 
-# Main execution
-while true; do
-    manage_node
-    # If manage_node returns (user chose "Back to main menu"), break the loop
-    [[ $? -eq 0 ]] && break
-done
+# Function to download snapshots
+download_snapshots() {
+    # Stop node
+    print_color "yellow" "Stopping Story node..."
+    sudo systemctl stop story
+    sudo systemctl stop story-geth
+    check_status "Node stopped"
 
-print_color "blue" "Exiting Story Node Manager."
+    # Confirm with user
+    print_color "yellow" "You have chosen to download snapshots from:"
+    print_color "blue" "Story snapshot: $story_snapshot_url"
+    print_color "blue" "Geth snapshot: $geth_snapshot_url"
+    read -p "Do you want to proceed? (y/n): " confirm
+    if [[ $confirm != "y" && $confirm != "Y" ]]; then
+        print_color "yellow" "Snapshot download cancelled by user."
+        return
+    fi
+
+    # Download snapshots
+    print_color "yellow" "Downloading Story snapshot..."
+    cd $HOME
+    rm -f Story_snapshot.lz4
+    wget --show-progress $story_snapshot_url -O Story_snapshot.lz4
+    check_status "Story snapshot download"
+
+    print_color "yellow" "Downloading Geth snapshot..."
+    rm -f Geth_snapshot.lz4
+    wget --show-progress $geth_snapshot_url -O Geth_snapshot.lz4
+    check_status "Geth snapshot download"
+
+    # Backup priv_validator_state.json
+    print_color "yellow" "Backing up priv_validator_state.json..."
+    cp ~/.story/story/data/priv_validator_state.json ~/.story/priv_validator_state.json.backup
+    check_status "Backup creation"
+
+    # Remove old data
+    print_color "yellow" "Removing old data..."
+    rm -rf ~/.story/story/data
+    rm -rf ~/.story/geth/iliad/geth/chaindata
+    check_status "Old data removal"
+
+    # Decompress snapshots
+    print_color "yellow" "Decompressing Story snapshot..."
+    sudo mkdir -p /root/.story/story/data
+    lz4 -d -c Story_snapshot.lz4 | pv | sudo tar xv -C ~/.story/story/ > /dev/null
+    check_status "Story snapshot decompression"
+
+    print_color "yellow" "Decompressing Geth snapshot..."
+    sudo mkdir -p /root/.story/geth/iliad/geth/chaindata
+    lz4 -d -c Geth_snapshot.lz4 | pv | sudo tar xv -C ~/.story/geth/iliad/geth/ > /dev/null
+    check_status "Geth snapshot decompression"
+
+    # Restore priv_validator_state.json
+    print_color "yellow" "Restoring priv_validator_state.json..."
+    cp ~/.story/priv_validator_state.json.backup ~/.story/story/data/priv_validator_state.json
+    check_status "Restore priv_validator_state.json"
+
+    # Restart node
+    print_color "yellow" "Restarting Story node..."
+    sudo systemctl start story
+    sudo systemctl start story-geth
+    check_status "Node restart"
+
+    print_color "blue" "Snapshot download and installation process completed!"
+    read -n 1 -s -r -p "Press any key to continue"
+}
+
+# Function to display snapshot submenu
+display_snapshot_submenu() {
+    local current=0
+    local options=("Install tools: wget lz4 aria2 pv" "Choose download source" "Back to main menu")
+
+    while true; do
+        clear
+        print_color "blue" "=== Download Latest Snapshot | J•Node | www.josephtran.xyz ==="
+        echo "Use arrow keys to navigate, Enter to select, or type the number of your choice."
+        echo ""
+
+        for i in "${!options[@]}"; do
+            if [ "$i" -eq "$current" ]; then
+                echo -e "${BLUE}> $((i+1)). ${options[$i]}${NC}"
+            else
+                echo "  $((i+1)). ${options[$i]}"
+            fi
+        done
+
+        read -s -n 1 key
+
+        if [[ $key == $'\e' ]]; then
+            read -s -n 2 key
+            if [[ $key == '[A' ]]; then  # Up arrow
+                ((current--))
+                [ "$current" -lt 0 ] && current=$((${#options[@]}-1))
+            elif [[ $key == '[B' ]]; then  # Down arrow
+                ((current++))
+                [ "$current" -ge "${#options[@]}" ] && current=0
+            fi
+        elif [[ $key =~ ^[1-3]$ ]]; then  # Number keys
+            current=$((key-1))
+            break
+        elif [[ $key == '' ]]; then  # Enter key
+            break
+        fi
+    done
+
+    case $current in
+        0) install_tools ;;
+        1) choose_download_source ;;
+        2) return ;;
+    esac
+
+    display_snapshot_submenu
+}
+
+# Execute the snapshot submenu
+display_snapshot_submenu
