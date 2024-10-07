@@ -6,18 +6,6 @@ BLUE='\033[0;36m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
-# Script locations - change these to your local paths for testing
-INSTALL_SCRIPT_PATH="$HOME/story-node-installer.sh"
-MANAGE_SCRIPT_PATH="$HOME/story-manage-node.sh"
-REMOVE_SCRIPT_PATH="$HOME/story-remove-node.sh"
-UPGRADE_SCRIPT_PATH="$HOME/story-node-upgrader.sh"
-DOWNLOAD_SCRIPT_PATH="$HOME/story-download-snapshot.sh"
-
-
-# Default snapshot URLs
-DEFAULT_STORY_SNAPSHOT="https://josephtran.co/Story_snapshot.lz4"
-DEFAULT_GETH_SNAPSHOT="https://josephtran.co/Geth_snapshot.lz4"
-
 # Function to print colored output
 print_color() {
     case $1 in
@@ -43,7 +31,7 @@ check_status() {
 install_story_node() {
     clear
     print_color "blue" "Starting Story node installation..."
-    if source "$INSTALL_SCRIPT_PATH"; then
+    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-node-installer.sh); then
         print_color "blue" "✅ Story node installation completed"
     else
         print_color "red" "❌ Failed to install Story node"
@@ -55,7 +43,7 @@ install_story_node() {
 manage_node() {
     clear
     print_color "blue" "Starting node management..."
-    if source "$MANAGE_SCRIPT_PATH"; then
+    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-manage-node.sh); then
         print_color "blue" "✅ Node management completed"
     else
         print_color "red" "❌ Failed to execute node management"
@@ -67,7 +55,7 @@ manage_node() {
 remove_node() {
     clear
     print_color "yellow" "Starting node removal process..."
-    if source "$REMOVE_SCRIPT_PATH"; then
+    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-remove-node.sh); then
         print_color "blue" "✅ Node removal process completed"
     else
         print_color "red" "❌ Failed to execute node removal"
@@ -83,7 +71,7 @@ check_node_status() {
     CONFIG_FILE="$HOME/.story/story/config/config.toml"
 
     if [ -f "$CONFIG_FILE" ]; then
-        # Đọc cổng từ config.toml
+        
         PORT=$(grep -oP '(?<=laddr = "tcp://127\.0\.0\.1:)([0-9]+)' "$CONFIG_FILE")
         if [ -z "$PORT" ]; then
             echo "Could not find port in config file."
@@ -130,7 +118,7 @@ check_block_sync() {
     done
 }
 
-# Function to check story-geth logs
+# Function to check Geth logs
 check_geth_logs() {
     clear
     print_color "blue" "Checking Story-Geth Logs..."
@@ -150,7 +138,7 @@ check_story_logs() {
 download_snapshot() {
     clear
     print_color "blue" "Starting snapshot download process..."
-    if source "$DOWNLOAD_SCRIPT_PATH"; then
+    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-download-snapshot.sh); then
         print_color "blue" "✅ Snapshot download completed"
     else
         print_color "red" "❌ Failed to execute download snapshot"
@@ -163,7 +151,7 @@ download_snapshot() {
 upgrade_node() {
     clear
     print_color "blue" "Starting node upgrade process..."
-    if source "$UPGRADE_SCRIPT_PATH"; then
+    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-node-upgrader.sh); then
         print_color "blue" "✅ Node upgrade process completed"
     else
         print_color "red" "❌ Failed to execute upgrade node"
@@ -175,9 +163,9 @@ upgrade_node() {
 display_main_menu() {
     clear
     local options=(
-        "Install Story node" 
-        "Manage node (Version, Port, Stop/Start)" 
-        "Check node (status, block sync, logs)" 
+        "Install Story node | One-liner" 
+        "Manage node | Version, Port, Backup keys, Stop/Start" 
+        "Check node | status, block sync, logs" 
         "Upgrade node"  
         "Download latest snapshot" 
         "Backup & Remove node" 
@@ -201,7 +189,7 @@ display_main_menu() {
 
 # Function to display status and logs menu
 display_status_menu() {
-    local options=("Check Node Status" "Check Block Sync" "Check Story-Geth Logs" "Check Story Logs" "Back to Main Menu")
+    local options=("Check Node Status" "Check Block Sync" "Check Geth Logs" "Check Story Logs" "Back to Main Menu")
     local current=$1
 
     print_color "blue" "=== Story Node Status and Log Checker | J•Node | www.josephtran.xyz ==="
@@ -220,7 +208,7 @@ display_status_menu() {
 # Function to handle status and logs menu selection
 status_menu() {
     local current=0
-    local options=("Check Node Status" "Check Block Sync" "Check Story-Geth Logs" "Check Story Logs" "Back to Main Menu")
+    local options=("Check Node Status" "Check Block Sync" "Check Geth Logs" "Check Story Logs" "Back to Main Menu")
 
     while true; do
         clear
@@ -264,9 +252,9 @@ status_menu() {
 display_main_menu() {
     clear
     local options=(
-        "Install Story node" 
-        "Manage node (Version, Port, Stop/Start)" 
-        "Check node (status, block sync, logs)" 
+        "Install Story node | One-liner" 
+        "Manage node | Version, Port, Backup keys, Stop/Start" 
+        "Check node | status, block sync, logs" 
         "Upgrade node"  
         "Download latest snapshot" 
         "Backup & Remove node" 
@@ -291,9 +279,9 @@ display_main_menu() {
 main_menu() {
     local current=0
     local options=(
-        "Install Story node" 
-        "Manage node (Version, Port, Stop/Start)" 
-        "Check node (status, block sync, logs)" 
+        "Install Story node | One-liner" 
+        "Manage node | Version, Port, Backup keys, Stop/Start" 
+        "Check node | status, block sync, logs" 
         "Upgrade node"  
         "Download latest snapshot" 
         "Backup & Remove node" 
@@ -343,7 +331,7 @@ main() {
             break
         fi
     done
-    print_color "blue" "Exiting Story Node Manager. Goodbye!"
+    print_color "blue" "Exiting Story Node Manager | www.josephtran.xyz | Goodbye!"
 }
 
 # Run the main function
