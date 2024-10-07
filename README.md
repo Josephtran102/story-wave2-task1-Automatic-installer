@@ -10,7 +10,7 @@ Story Node Manager is a comprehensive tool designed to simplify the process of m
 # Installation
 To start using the Story Node Manager, run the following command in your terminal:
 ```
-bash <(curl -s https://story.josephtran.co/scripts/story-manager-v0.1.0.sh)
+bash <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/story-mananger.sh)
 ```
 # Main Menu
 
