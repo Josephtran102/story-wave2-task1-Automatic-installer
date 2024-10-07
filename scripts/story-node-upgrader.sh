@@ -78,7 +78,7 @@ check_and_install_go() {
         fi
     else
         current_version=$(go version | awk '{print $3}')
-        print_color "yellow" "Current Go version: $current_version. Would you like to update Go? (y/n)"
+        print_color "yellow" "Your current Go version: $current_version. Would you like to update Go? (y/n)"
         read -r update_go
         if [[ $update_go == "y" || $update_go == "Y" ]]; then
             install_go
@@ -146,12 +146,39 @@ upgrade_story_geth() {
     story-geth version
 }
 
+# Function to check versions
+check_versions() {
+    clear
+    print_color "blue" "=== Check Versions | Story Node Upgrader | J•Node | www.josephtran.xyz ==="
+    
+    print_color "yellow" "Loading bash profile..."
+    source ~/.bash_profile
+    check_status "Bash profile loaded"
+
+    echo "Story version:"
+    if story version; then
+        check_status "Story version checked"
+    else
+        print_color "red" "Failed to check Story version"
+    fi
+
+    echo ""
+    echo "Story-Geth version:"
+    if story-geth version; then
+        check_status "Story-Geth version checked"
+    else
+        print_color "red" "Failed to check Story-Geth version"
+    fi
+
+    read -n 1 -s -r -p "Press any key to continue"
+}
+
 # Function to display upgrade menu
 display_upgrade_menu() {
-    local options=("Upgrade Story" "Upgrade Story-Geth" "Back to Main Menu")
+    local options=("Check Versions" "Upgrade Story" "Upgrade Story-Geth" "Back to Main Menu")
     local current=$1
 
-    print_color "blue" "Story Node Upgrader"
+    print_color "blue" "=== Story Node Upgrader | J•Node | www.josephtran.xyz ==="
     echo "Use arrow keys to navigate, Enter to select, or type the number of your choice."
     echo ""
 
@@ -167,7 +194,7 @@ display_upgrade_menu() {
 # Main upgrade function
 upgrade_node() {
     local current=0
-    local options=("Upgrade Story" "Upgrade Story-Geth" "Back to Main Menu")
+    local options=("Check Versions" "Upgrade Story" "Upgrade Story-Geth" "Back to Main Menu")
 
     while true; do
         clear
@@ -186,7 +213,7 @@ upgrade_node() {
                 ((current++))
                 [ "$current" -ge "${#options[@]}" ] && current=0
             fi
-        elif [[ $key =~ ^[1-3]$ ]]; then  # Number keys
+        elif [[ $key =~ ^[1-4]$ ]]; then  # Number keys
             current=$((key-1))
             break
         elif [[ $key == '' ]]; then  # Enter key
@@ -196,33 +223,38 @@ upgrade_node() {
 
     case $current in
         0)
+            check_versions
+            read -n 1 -s -r -p "Press any key to return to the upgrade menu"
+            ;;
+        1)
             read -p "Enter the Story version to upgrade to (e.g., v0.10.1), or press Enter for latest: " version
             if [ -z "$version" ]; then
                 version=$(curl -s https://api.github.com/repos/piplabs/story/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
                 print_color "yellow" "Using latest version: $version"
             fi
             upgrade_story $version
+            print_color "blue" "Upgrade process completed!"
+            read -n 1 -s -r -p "Press any key to return to the upgrade menu"
             ;;
-        1)
+        2)
             read -p "Enter the Story-Geth version to upgrade to (e.g., v0.9.3), or press Enter for latest: " version
             if [ -z "$version" ]; then
                 version=$(curl -s https://api.github.com/repos/piplabs/story-geth/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
                 print_color "yellow" "Using latest version: $version"
             fi
             upgrade_story_geth $version
+            print_color "blue" "Upgrade process completed!"
+            read -n 1 -s -r -p "Press any key to return to the upgrade menu"
             ;;
-        2)
+        3)
             print_color "blue" "Returning to main menu..."
             return
             ;;
         *)
-            print_color "red" "Invalid choice. Upgrade cancelled."
-            return 1
+            print_color "red" "Invalid choice. Operation cancelled."
+            read -n 1 -s -r -p "Press any key to return to the upgrade menu"
             ;;
     esac
-
-    print_color "blue" "Upgrade process completed!"
-    read -n 1 -s -r -p "Press any key to continue"
 }
 
 # Execute the upgrade function
