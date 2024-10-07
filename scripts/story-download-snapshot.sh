@@ -119,12 +119,12 @@ download_snapshots() {
     print_color "yellow" "Downloading Story snapshot..."
     cd $HOME
     rm -f Story_snapshot.lz4
-    wget --show-progress $story_snapshot_url -O Story_snapshot.lz4
+    aria2c -x 16 -s 16 -k 1M $story_snapshot_url -O Story_snapshot.lz4
     check_status "Story snapshot download"
 
     print_color "yellow" "Downloading Geth snapshot..."
     rm -f Geth_snapshot.lz4
-    wget --show-progress $geth_snapshot_url -O Geth_snapshot.lz4
+    aria2c -x 16 -s 16 -k 1M $geth_snapshot_url -O Geth_snapshot.lz4
     check_status "Geth snapshot download"
 
     # Backup priv_validator_state.json
