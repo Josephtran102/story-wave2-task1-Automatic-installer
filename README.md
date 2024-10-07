@@ -66,7 +66,7 @@ Selecting this option will exit the Story Node Manager.
 
 <img src="assets/10-exit.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
-###Navigation Tips
+### Navigation Tips
 
 - Use the arrow keys to move up and down in the menu.
 - Press Enter to select an option.
