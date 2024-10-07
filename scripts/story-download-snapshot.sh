@@ -7,8 +7,8 @@ YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # Default snapshot URLs
-DEFAULT_STORY_SNAPSHOT="https://josephtran.co/Story_snapshot.lz4"
-DEFAULT_GETH_SNAPSHOT="https://josephtran.co/Geth_snapshot.lz4"
+DEFAULT_STORY_SNAPSHOT="https://story.josephtran.co/Story_snapshot.lz4"
+DEFAULT_GETH_SNAPSHOT="https://story.josephtran.co/Geth_snapshot.lz4"
 
 # Function to print colored output
 print_color() {
@@ -171,7 +171,7 @@ display_snapshot_submenu() {
 
     while true; do
         clear
-        print_color "blue" "Download Latest Snapshot Submenu:"
+        print_color "blue" "=== Download Latest Snapshot | J•Node | www.josephtran.xyz ==="
         echo "Use arrow keys to navigate, Enter to select, or type the number of your choice."
         echo ""
 
