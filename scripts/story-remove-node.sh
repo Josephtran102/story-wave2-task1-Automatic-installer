@@ -27,9 +27,18 @@ check_status() {
     fi
 }
 
+# Function to export keys
+export_keys() {
+    print_color "blue" "Exporting keys..."
+    source $HOME/.bash_profile
+    story validator export --export-evm-key
+    check_status "Keys exported"
+}
+
 # Function to remove node
 remove_node() {
     clear
+    print_color "blue" "=== Backup & Remove node | J•Node | www.josephtran.xyz ==="
     print_color "yellow" "Warning: This will completely remove the Story node from your system."
     print_color "blue" "Important keys will be automatically saved in $HOME/story-backup:
     - private_key.txt,
@@ -38,6 +47,9 @@ remove_node() {
     - priv_validator_state.json)"
     read -p "Are you sure you want to proceed? (y/n): " confirm
     if [[ $confirm == [Yy]* ]]; then
+        # Export keys
+        export_keys
+
         # Create backup folder if it doesn't exist
         backup_folder="$HOME/story-backup"
         mkdir -p "$backup_folder"
