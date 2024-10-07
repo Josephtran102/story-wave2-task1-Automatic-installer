@@ -1,5 +1,5 @@
 # Wave-2: story-validators-race
-<img src="assets/story-wave2-banner-task1.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/story-wave2-banner-task1.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 # Task 1: Automatic installer for the Story node
 
@@ -16,15 +16,15 @@ bash <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1
 
 After running the script, you'll see the main menu with the following options:
 
-<img src="assets/01-main-menu.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/01-main-menu.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 # Features
 ## 1. Install Story node | One-liner
 This option allows you to install the Story node with a single command. It will automatically download and install all necessary components.
 
-<img src="assets/08-install-1.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/08-install-1.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
-<img src="assets/09-install-2.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/09-install-2.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 2. Manage node | Version, Port, Backup keys, Stop/Start
 This menu provides various management options for your Story node:
@@ -34,13 +34,13 @@ Change the node port
 Backup your keys
 Stop or start the node
 
-<img src="assets/03-manage-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/03-manage-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
-<img src="assets/13-check-version.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/13-check-version.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
-<img src="assets/11-change-port.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/11-change-port.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
-<img src="assets/export-keys.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/export-keys.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 
 
@@ -52,35 +52,35 @@ This submenu offers different ways to monitor your node:
 - Check Geth Logs: View the Geth client logs
 - Check Story Logs: View the Story node logs
 
-<img src="assets/04-check-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/04-check-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
-<img src="assets/check-node-status.png" style="width: 100%; height: 100%; object-fit: cover;" />
-<img src="assets/geth-logs.png" style="width: 100%; height: 100%; object-fit: cover;" />
-<img src="assets/story-logs.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/check-node-status.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/geth-logs.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/story-logs.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 4. Upgrade node
 Use this option to upgrade your Story node to the latest version.
 
-<img src="assets/05-upgrade-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
-<img src="assets/upgrade-story.png" style="width: 100%; height: 100%; object-fit: cover;" />
-<img src="assets/upgrade-geth.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/05-upgrade-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/upgrade-story.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/upgrade-geth.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 5. Download latest snapshot
 This option allows you to download the latest blockchain snapshot, which can significantly reduce the time needed for initial synchronization.
 
-<img src="assets/06-snapshot.png" style="width: 100%; height: 100%; object-fit: cover;" />
-<img src="assets/download-snapshot.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/06-snapshot.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/download-snapshot.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 6. Backup & Remove node
 This option guides you through the process of backing up your node data and then removing the node from your system.
 
-<img src="assets/07-backup-remove.png" style="width: 100%; height: 100%; object-fit: cover;" />
-<img src="assets/backup-remove-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/07-backup-remove.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/backup-remove-node.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ## 7. Exit
 Selecting this option will exit the Story Node Manager.
 
-<img src="assets/10-exit.png" style="width: 100%; height: 100%; object-fit: cover;" />
+<img src="https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/assets/10-exit.png" style="width: 100%; height: 100%; object-fit: cover;" />
 
 ### Navigation Tips
 
