@@ -6,6 +6,18 @@ BLUE='\033[0;36m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
+
+# INSTALL_SCRIPT_PATH="https://story.josephtran.co/scripts/story-node-installer.sh"
+# MANAGE_SCRIPT_PATH="https://story.josephtran.co/scripts/story-manage-node.sh"
+# REMOVE_SCRIPT_PATH="https://story.josephtran.co/scripts/story-remove-node.sh"
+# UPGRADE_SCRIPT_PATH="https://story.josephtran.co/scripts/story-node-upgrader.sh"
+# DOWNLOAD_SCRIPT_PATH="https://story.josephtran.co/scripts/story-download-snapshot.sh"
+
+
+# Default snapshot URLs
+DEFAULT_STORY_SNAPSHOT="https://story.josephtran.co/Story_snapshot.lz4"
+DEFAULT_GETH_SNAPSHOT="https://story.josephtran.co/Geth_snapshot.lz4"
+
 # Function to print colored output
 print_color() {
     case $1 in
@@ -31,7 +43,7 @@ check_status() {
 install_story_node() {
     clear
     print_color "blue" "Starting Story node installation..."
-    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-node-installer.sh); then
+    if source <(curl -s https://story.josephtran.co/scripts/story-node-installer.sh); then
         print_color "blue" "✅ Story node installation completed"
     else
         print_color "red" "❌ Failed to install Story node"
@@ -43,7 +55,7 @@ install_story_node() {
 manage_node() {
     clear
     print_color "blue" "Starting node management..."
-    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-manage-node.sh); then
+    if source <(curl -s https://story.josephtran.co/scripts/story-manage-node.sh); then
         print_color "blue" "✅ Node management completed"
     else
         print_color "red" "❌ Failed to execute node management"
@@ -55,7 +67,7 @@ manage_node() {
 remove_node() {
     clear
     print_color "yellow" "Starting node removal process..."
-    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-remove-node.sh); then
+    if source <(curl -s https://story.josephtran.co/scripts/story-remove-node.sh); then
         print_color "blue" "✅ Node removal process completed"
     else
         print_color "red" "❌ Failed to execute node removal"
@@ -67,23 +79,19 @@ remove_node() {
 check_node_status() {
     clear
     print_color "blue" "Checking Node Status..."
-
     CONFIG_FILE="$HOME/.story/story/config/config.toml"
-
     if [ -f "$CONFIG_FILE" ]; then
-        
-        PORT=$(grep -oP '(?<=laddr = "tcp://127\.0\.0\.1:)([0-9]+)' "$CONFIG_FILE")
+        PORT=$(sed -n '/^\[rpc\]/,/^\[/p' "$CONFIG_FILE" | grep 'laddr = "tcp://' | grep -oP ':\K\d+')
         if [ -z "$PORT" ]; then
-            echo "Could not find port in config file."
+            echo "Could not find RPC port in config file."
             return
         fi
     else
         echo "Configuration file not found!"
         return
     fi
-
     echo "Current node status:"
-    curl "localhost:$PORT/status" | jq
+    curl -s "localhost:$PORT/status" | jq
     read -n 1 -s -r -p "Press any key to continue"
 }
 
@@ -97,9 +105,9 @@ check_block_sync() {
     CONFIG_FILE="$HOME/.story/story/config/config.toml"
 
     if [ -f "$CONFIG_FILE" ]; then
-        PORT=$(grep -oP '(?<=laddr = "tcp://127\.0\.0\.1:)([0-9]+)' "$CONFIG_FILE")
+        PORT=$(sed -n '/^\[rpc\]/,/^\[/p' "$CONFIG_FILE" | grep 'laddr = "tcp://' | grep -oP ':\K\d+')
         if [ -z "$PORT" ]; then
-            echo "Could not find port in config file."
+            echo "Could not find RPC port in config file."
             return
         fi
     else
@@ -111,6 +119,13 @@ check_block_sync() {
     while true; do
         local_height=$(curl -s "localhost:$PORT/status" | jq -r '.result.sync_info.latest_block_height')
         network_height=$(curl -s https://rpc-story.josephtran.xyz/status | jq -r '.result.sync_info.latest_block_height')
+        
+        if [ -z "$local_height" ] || [ -z "$network_height" ]; then
+            echo "Error: Unable to fetch block heights. Please check your node and network connection."
+            sleep 5
+            continue
+        fi
+        
         blocks_left=$((network_height - local_height))
         
         echo -e "\033[1;38mYour node height:\033[0m \033[1;34m$local_height\033[0m | \033[1;35mNetwork height:\033[0m \033[1;36m$network_height\033[0m | \033[1;29mBlocks left:\033[0m \033[1;31m$blocks_left\033[0m"
@@ -138,7 +153,7 @@ check_story_logs() {
 download_snapshot() {
     clear
     print_color "blue" "Starting snapshot download process..."
-    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-download-snapshot.sh); then
+    if source <(curl -s https://story.josephtran.co/scripts/story-download-snapshot.sh); then
         print_color "blue" "✅ Snapshot download completed"
     else
         print_color "red" "❌ Failed to execute download snapshot"
@@ -151,7 +166,7 @@ download_snapshot() {
 upgrade_node() {
     clear
     print_color "blue" "Starting node upgrade process..."
-    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1/refs/heads/main/scripts/story-node-upgrader.sh); then
+    if source <(curl -s https://story.josephtran.co/scripts/story-node-upgrader.sh); then
         print_color "blue" "✅ Node upgrade process completed"
     else
         print_color "red" "❌ Failed to execute upgrade node"
