@@ -43,7 +43,7 @@ check_status() {
 install_story_node() {
     clear
     print_color "blue" "Starting Story node installation..."
-    if source <(curl -s https://story.josephtran.co/scripts/story-node-installer.sh); then
+    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/scripts/story-node-installer.sh); then
         print_color "blue" "✅ Story node installation completed"
     else
         print_color "red" "❌ Failed to install Story node"
