@@ -135,7 +135,7 @@ download_snapshots() {
     # Remove old data
     print_color "yellow" "Removing old data..."
     rm -rf ~/.story/story/data
-    rm -rf ~/.story/geth/iliad/geth/chaindata
+    rm -rf ~/.story/geth/odyssey/geth/chaindata
     check_status "Old data removal"
 
     # Decompress snapshots
@@ -145,8 +145,8 @@ download_snapshots() {
     check_status "Story snapshot decompression"
 
     print_color "yellow" "Decompressing Geth snapshot..."
-    sudo mkdir -p /root/.story/geth/iliad/geth/chaindata
-    lz4 -d -c Geth_snapshot.lz4 | pv | sudo tar xv -C ~/.story/geth/iliad/geth/ > /dev/null
+    sudo mkdir -p /root/.story/geth/odyssey/geth/chaindata
+    lz4 -d -c Geth_snapshot.lz4 | pv | sudo tar xv -C ~/.story/geth/odyssey/geth/ > /dev/null
     check_status "Geth snapshot decompression"
 
     # Restore priv_validator_state.json
