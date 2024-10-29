@@ -153,7 +153,7 @@ check_story_logs() {
 download_snapshot() {
     clear
     print_color "blue" "Starting snapshot download process..."
-    if source <(curl -s https://story.josephtran.co/scripts/story-download-snapshot.sh); then
+    if source <(curl -s https://raw.githubusercontent.com/Josephtran102/story-wave2-task1-Automatic-installer/refs/heads/main/scripts/story-download-snapshot.sh); then
         print_color "blue" "✅ Snapshot download completed"
     else
         print_color "red" "❌ Failed to execute download snapshot"
